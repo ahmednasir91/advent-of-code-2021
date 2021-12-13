@@ -1,17 +1,23 @@
 fun main() {
     fun part1(input: List<String>): Int {
-        return input.size
+        var previous = input[0].toInt()
+        return input.map { it.toInt() }.map {
+            val diff = it - previous
+            previous = it
+            if (diff > 0) 1 else 0
+        }.sum()
     }
 
-    fun part2(input: List<String>): Int {
-        return input.size
+    fun part2(input: List<String>): Long {
+        val data = input.map { it.toInt() }.windowed(3) { it.sum() }
+        var previous = data[0]
+        return data.sumOf {
+            val diff = it - previous
+            previous = it
+            if (diff > 0) 1L else 0L
+        }
     }
-
-    // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
 
     val input = readInput("Day01")
-    println(part1(input))
     println(part2(input))
 }
